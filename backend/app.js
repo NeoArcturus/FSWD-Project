@@ -1,16 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const Dotenv = require("dotenv")
+const Dotenv = require("dotenv");
 const db = require("./database");
 
-const GET  = require("./routes/GET/index.js")
-const POST  = require("./routes/POST/index.js")
+const GET = require("./routes/GET/index.js");
+const POST = require("./routes/POST/index.js");
+
+const admin = require("./adminRoute/POST/auth");
 
 const app = express();
 const PORT = 8080;
 
-Dotenv.config()
+Dotenv.config();
 
 app.use(
   cors({
@@ -19,9 +21,9 @@ app.use(
 );
 app.use(bodyParser.json());
 
-
 app.use("/api", POST);
 app.use("/", GET);
+app.use("/admin", admin);
 
 app.listen(PORT, (error) => {
   if (!error) console.log("App is running fine on PORT 8080");
