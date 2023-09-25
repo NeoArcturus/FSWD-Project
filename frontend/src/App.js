@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
 
-import home from "./pages/home";
+import login from "./pages/login";
 
 export default class App extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {};
   }
 
@@ -15,7 +15,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={home}></Route>
+          <Route exact path="/" component={login}></Route>
         </Switch>
       </Router>
     );

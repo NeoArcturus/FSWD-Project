@@ -8,7 +8,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 
-import "../style/home.css";
+import "../style/login.css";
 import { Button } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,15 +25,62 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
 
-class home extends React.Component {
+class login extends React.Component {
   constructor(props) {
-    super();
-    this.state = {};
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      toggleType: "password",
+    };
   }
 
+  navTo = (path) => {
+    this.props.history.push(path);
+  };
+
+  handleEmailLogin = (rst) => {};
+  handleGoogleLogin = (rst) => {};
+
   loginClick = () => {
-    toast.success("Successful login!");
+    const auth = getAuth(app);
+    signInWithEmailAndPassword(auth, this.state.username, this.state.email)
+      .then((result) => this.handleEmailLogin(result))
+      .catch((error) => {
+        toast.error("Sign In error!");
+        console.log(error);
+      });
+  };
+
+  googleClick = () => {
+    const auth = getAuth(app);
+    signInWithPopup(auth, provider)
+      .then((result) => this.handleGoogleLogin(result))
+      .catch((error) => {
+        toast.error("Sign In error!");
+        console.log(error);
+      });
+  };
+
+  passwordToggle = () => {
+    if (this.state.toggleType === "password")
+      this.setState({
+        toggleType: "text",
+      });
+    if (this.state.toggleType === "text")
+      this.setState({
+        toggleType: "password",
+      });
+  };
+
+  onChangeUser = (event) => {
+    this.setState({ username: event.target.value });
+  };
+
+  onChangePassword = (event) => {
+    this.setState({ password: event.target.value });
   };
 
   render() {
@@ -49,11 +96,24 @@ class home extends React.Component {
         <div id="loginForm">
           <h3>Sign In</h3>
           <br />
-          <Input placeholder="Username"></Input>
-          <Input placeholder="Password" type="password"></Input>
+          <Input
+            placeholder="Username"
+            type="email"
+            value={this.state.username}
+            onChange={(event) => this.onChangeUser(event)}
+          ></Input>
+          <Input
+            placeholder="Password"
+            type={this.state.toggleType}
+            value={this.state.password}
+            onChange={(event) => this.onChangePassword(event)}
+          ></Input>
           <p>
-            <Checkbox style={{ color: "rgb(0, 255, 255, 0.5)" }} /> Show
-            password
+            <Checkbox
+              style={{ color: "rgb(0, 255, 255, 0.5)" }}
+              onClick={() => this.passwordToggle()}
+            />
+            Show password
           </p>
           <div
             id="buttonBox"
@@ -87,6 +147,7 @@ class home extends React.Component {
                 fontSize: "30px",
                 transition: "0.4s ease-in-out",
               }}
+              onClick={() => this.googleClick()}
             >
               Google Sign In
             </Button>
@@ -108,4 +169,4 @@ class home extends React.Component {
   }
 }
 
-export default withRouter(home);
+export default withRouter(login);
