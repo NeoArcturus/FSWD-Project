@@ -17,4 +17,14 @@ router.post("/login", async (req, res) => {
   } else auth.login(req.body, res);
 });
 
+router.post("/googleSignIn", async (req, res) => {
+  if (
+    req.body.username === undefined ||
+    req.body.username === null ||
+    req.body.username === ""
+  ) {
+    res.status(401).send({ message: "Invalid username" });
+  } else auth.googleLogin(req.body.username, res);
+});
+
 module.exports = router;

@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import axios from "axios";
 
 import "../style/login.css";
 import { Button } from "react-bootstrap";
@@ -41,12 +42,36 @@ class login extends React.Component {
     this.props.history.push(path);
   };
 
-  handleEmailLogin = (rst) => {};
-  handleGoogleLogin = (rst) => {};
+  handleEmailLogin = (rst) => {
+    console.log(rst);
+    axios
+      .post("http://localhost:8080/api/auth/authController/login", {
+        id: this.state.username,
+        password: this.state.password,
+      })
+      .then()
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        this.resetData();
+      });
+  };
+  handleGoogleLogin = (rst) => {
+    axios
+      .post("http://localhost:8080/api/auth/authController/googleSignIn", {
+        username: rst.user.email,
+      })
+      .then((result) => {
+        toast.success("Successful sign in!");
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        this.resetData();
+      });
+  };
 
   loginClick = () => {
     const auth = getAuth(app);
-    signInWithEmailAndPassword(auth, this.state.username, this.state.email)
+    signInWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((result) => this.handleEmailLogin(result))
       .catch((error) => {
         toast.error("Sign In error!");
@@ -81,6 +106,13 @@ class login extends React.Component {
 
   onChangePassword = (event) => {
     this.setState({ password: event.target.value });
+  };
+
+  resetData = () => {
+    this.setState({
+      username: "",
+      password: "",
+    });
   };
 
   render() {

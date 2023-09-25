@@ -41,8 +41,10 @@ const login = (data, res) => {
   sql.query(
     "SELECT * FROM users WHERE id='" + data.id + "'",
     (error, result) => {
-      if (error) {
-        res.status(511);
+      if (error)
+        res.status(500).send({ message: "Something went wrong", error: error });
+      else if (result.length === 0) {
+        res.status(404);
         res.send({ message: "User not found" });
       } else {
         bcrypt.compare(data.password, result[0].password, (error, rst) => {
@@ -65,4 +67,15 @@ const login = (data, res) => {
   );
 };
 
-module.exports = { register, login };
+const googleLogin = (username, res) => {
+  sql.query(
+    "SELECT * FROM users WHERE username='" + username + "'",
+    (error, result) => {
+      if (error)
+        res.status(500).send({ message: "Something went wrong", error: error });
+      else res.status(200).send({ message: "User authenticated" });
+    }
+  );
+};
+
+module.exports = { register, login, googleLogin };

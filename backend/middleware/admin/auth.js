@@ -1,6 +1,6 @@
-const sql = require("../database");
+const sql = require("../../database");
 const bcrypt = require("bcrypt");
-const jwt = require("./jwtToken");
+const jwt = require("../../middleware/jwtToken");
 
 const newAdmin = (data, res) => {
   bcrypt.genSalt(10, (err, salt) => {
