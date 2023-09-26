@@ -155,7 +155,7 @@ class login extends React.Component {
           >
             <Button
               style={{
-                backgroundColor: "black",
+                backgroundColor: "rgb(0, 0, 0, 0.3)",
                 color: "aqua",
                 borderStyle: "solid",
                 borderColor: "transparent",
@@ -171,7 +171,7 @@ class login extends React.Component {
             <br />
             <Button
               style={{
-                backgroundColor: "black",
+                backgroundColor: "rgb(0, 0, 0, 0.3)",
                 color: "aqua",
                 borderStyle: "solid",
                 borderColor: "transparent",
@@ -190,6 +190,7 @@ class login extends React.Component {
               style={{
                 backgroundColor: "transparent",
                 borderColor: "transparent",
+                color: "white",
               }}
             >
               Create Account
