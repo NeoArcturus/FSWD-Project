@@ -15,17 +15,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Input, Checkbox } from "@mui/material";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBaUYMsQWYNFT8TEcw9sEjiiJ3fTH_DVJc",
-  authDomain: "fullstack-web-development.firebaseapp.com",
-  projectId: "fullstack-web-development",
-  storageBucket: "fullstack-web-development.appspot.com",
-  messagingSenderId: "942474945241",
-  appId: "1:942474945241:web:5ca1d9f29c7f52c47b54c8",
-  measurementId: "G-8FW79937H0",
-};
+import { firebaseData } from "../data"; //Create a firebase configuration javascript file
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseData);
 const provider = new GoogleAuthProvider();
 
 class login extends React.Component {
