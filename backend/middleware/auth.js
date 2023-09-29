@@ -77,7 +77,7 @@ const login = (data, res) => {
 
 const googleLogin = (username, res) => {
   sql.query(
-    "SELECT * FROM users WHERE username='" + username + "'",
+    "SELECT * FROM users WHERE email='" + username + "'",
     (error, result) => {
       if (error)
         res.status(500).send({ message: "Something went wrong", error: error });

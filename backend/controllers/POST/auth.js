@@ -19,12 +19,12 @@ router.post("/login", async (req, res) => {
 
 router.post("/googleSignIn", async (req, res) => {
   if (
-    req.body.username === undefined ||
-    req.body.username === null ||
-    req.body.username === ""
+    req.body.email === undefined ||
+    req.body.email === null ||
+    req.body.email === ""
   ) {
     res.status(401).send({ message: "Invalid username" });
-  } else auth.googleLogin(req.body.username, res);
+  } else auth.googleLogin(req.body.email, res);
 });
 
 router.post("/googleSignUp", async (req, res) => {
