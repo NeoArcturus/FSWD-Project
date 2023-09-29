@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 
 import login from "./pages/login";
+import register from "./pages/register";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/" component={login}></Route>
+          <Route path="/register" component={register}></Route>
         </Switch>
       </Router>
     );

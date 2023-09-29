@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import axios from "axios";
@@ -28,65 +28,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
-class login extends React.Component {
+class register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
       password: "",
       toggleType: "password",
+      name: "",
+      phone: "",
     };
   }
 
   navTo = (path) => {
     this.props.history.push(path);
-  };
-
-  handleEmailLogin = (rst) => {
-    console.log(rst);
-    axios
-      .post("http://localhost:8080/api/auth/authController/login", {
-        id: this.state.email,
-        password: this.state.password,
-      })
-      .then()
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        this.resetData();
-      });
-  };
-  handleGoogleLogin = (rst) => {
-    axios
-      .post("http://localhost:8080/api/auth/authController/googleSignIn", {
-        email: rst.user.email,
-      })
-      .then((result) => {
-        toast.success("Successful sign in!");
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        this.resetData();
-      });
-  };
-
-  loginClick = () => {
-    const auth = getAuth(app);
-    signInWithEmailAndPassword(auth, this.state.email, this.state.password)
-      .then((result) => this.handleEmailLogin(result))
-      .catch((error) => {
-        toast.error("Sign In error!");
-        console.log(error);
-      });
-  };
-
-  googleClick = () => {
-    const auth = getAuth(app);
-    signInWithPopup(auth, provider)
-      .then((result) => this.handleGoogleLogin(result))
-      .catch((error) => {
-        toast.error("Sign In error!");
-        console.log(error);
-      });
   };
 
   passwordToggle = () => {
@@ -108,11 +63,77 @@ class login extends React.Component {
     this.setState({ password: event.target.value });
   };
 
+  onChangeName = (event) => {
+    this.setState({ name: event.target.value });
+  };
+
+  onChangePhone = (event) => {
+    this.setState({ phone: event.target.value });
+  };
+
   resetData = () => {
     this.setState({
       email: "",
       password: "",
+      name: "",
+      phone: "",
     });
+  };
+
+  handleGoogleSignUp = (result) => {
+    axios
+      .post("http://localhost:8080/api/auth/authController/googleSignUp", {
+        data: result.user,
+      })
+      .then((result) => {
+        toast.success("Successful sign up!");
+        console.log(result);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        console.log(error.response.data.error);
+        this.resetData();
+      });
+  };
+
+  handleEmailSignUp = (result) => {
+    axios
+      .post("http://localhost:8080/api/auth/authController/register", {
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name,
+        phone: this.state.phone,
+      })
+      .then((result) => {
+        toast.success("Successful registration!");
+        console.log(result);
+        this.resetData();
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        console.log(error.response.data.error);
+        this.resetData();
+      });
+  };
+
+  signUpClick = () => {
+    const auth = getAuth(app);
+    createUserWithEmailAndPassword(auth, this.state.email, this.state.password)
+      .then((result) => this.handleEmailSignUp(result))
+      .catch((error) => {
+        toast.error("Sign In error!");
+        console.log(error);
+      });
+  };
+
+  googleClick = () => {
+    const auth = getAuth(app);
+    signInWithPopup(auth, provider)
+      .then((result) => this.handleGoogleSignUp(result))
+      .catch((error) => {
+        toast.error("Sign In error!");
+        console.log(error);
+      });
   };
 
   render() {
@@ -126,8 +147,18 @@ class login extends React.Component {
           theme="dark"
         />
         <div id="loginForm">
-          <h3>Sign In</h3>
-          <br />
+          <h3>Sign Up</h3>
+          <Input
+            placeholder="Company Name"
+            value={this.state.name}
+            onChange={(event) => this.onChangeName(event)}
+          ></Input>
+          <Input
+            placeholder="Company Phone"
+            type="tel"
+            value={this.state.phone}
+            onChange={(event) => this.onChangePhone(event)}
+          ></Input>
           <Input
             placeholder="Company Email"
             type="email"
@@ -164,9 +195,9 @@ class login extends React.Component {
                 transition: "0.4s ease-in-out",
                 marginBottom: "10px",
               }}
-              onClick={() => this.loginClick()}
+              onClick={() => this.signUpClick()}
             >
-              Sign In
+              Sign Up
             </Button>
             <br />
             <Button
@@ -181,20 +212,20 @@ class login extends React.Component {
               }}
               onClick={() => this.googleClick()}
             >
-              Google Sign In
+              Google Sign Up
             </Button>
           </div>
           <p>
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Button
               style={{
                 backgroundColor: "transparent",
                 borderColor: "transparent",
                 color: "white",
               }}
-              onClick={() => this.navTo("/register")}
+              onClick={() => this.navTo("/")}
             >
-              Create Account
+              Login
             </Button>
           </p>
         </div>
@@ -203,4 +234,4 @@ class login extends React.Component {
   }
 }
 
-export default withRouter(login);
+export default withRouter(register);

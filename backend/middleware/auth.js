@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("./jwtToken");
 
 const register = (data, res) => {
+  console.log(data);
   bcrypt.genSalt(10, (error, salt) => {
     if (!error)
       bcrypt.hash(data.password, salt, (err, hash) => {
@@ -11,13 +12,13 @@ const register = (data, res) => {
             "INSERT INTO users VALUES('" +
               data.name +
               "', '" +
-              data.username +
+              data.email +
               "', '" +
               hash +
               "', '" +
               data.profile +
               "', '" +
-              data.id +
+              data.phone +
               "')",
             (error, result) => {
               if (error) {
@@ -32,14 +33,21 @@ const register = (data, res) => {
               }
             }
           );
+        } else {
+          res.status(500);
+          res.send({ message: "Error in registration", error: err });
         }
       });
+    else {
+      res.status(500);
+      res.send({ message: "Error in registration", error: error });
+    }
   });
 };
 
 const login = (data, res) => {
   sql.query(
-    "SELECT * FROM users WHERE id='" + data.id + "'",
+    "SELECT * FROM users WHERE email='" + data.email + "'",
     (error, result) => {
       if (error)
         res.status(500).send({ message: "Something went wrong", error: error });
@@ -73,9 +81,26 @@ const googleLogin = (username, res) => {
     (error, result) => {
       if (error)
         res.status(500).send({ message: "Something went wrong", error: error });
-      else res.status(200).send({ message: "User authenticated" });
+      else
+        res.status(200).send({ message: "User authenticated", result: result });
     }
   );
 };
 
-module.exports = { register, login, googleLogin };
+const googleSignUp = (data, res) => {
+  sql.query(
+    "INSERT INTO users (name, email) VALUES ('" +
+      data.displayName +
+      "', '" +
+      data.email +
+      "')",
+    (error, result) => {
+      if (error)
+        res.status(500).send({ message: "Something went wrong", error: error });
+      else
+        res.status(200).send({ message: "User authenticated", result: result });
+    }
+  );
+};
+
+module.exports = { register, login, googleLogin, googleSignUp };
