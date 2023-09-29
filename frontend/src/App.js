@@ -5,6 +5,7 @@ import "./App.css";
 
 import login from "./pages/login";
 import register from "./pages/register";
+import form from "./pages/form";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class App extends React.Component {
         <Switch>
           <Route exact path="/" component={login}></Route>
           <Route path="/register" component={register}></Route>
+          <Route path="/form" component={form}></Route>
         </Switch>
       </Router>
     );

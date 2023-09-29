@@ -41,7 +41,12 @@ class login extends React.Component {
         id: this.state.email,
         password: this.state.password,
       })
-      .then()
+      .then((result) => {
+        toast.success("Successful login!");
+        setTimeout(() => {
+          this.navTo("/form");
+        }, 4000);
+      })
       .catch((error) => {
         toast.error(error.response.data.message);
         this.resetData();
@@ -54,6 +59,9 @@ class login extends React.Component {
       })
       .then((result) => {
         toast.success("Successful sign in!");
+        setTimeout(() => {
+          this.navTo("/form");
+        }, 4000);
       })
       .catch((error) => {
         toast.error(error.response.data.message);

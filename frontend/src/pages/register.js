@@ -79,7 +79,10 @@ class register extends React.Component {
       })
       .then((result) => {
         toast.success("Successful sign up!");
-        console.log(result);
+        setTimeout(() => {
+          this.navTo("/form");
+        }, 4000);
+        this.resetData();
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -98,7 +101,9 @@ class register extends React.Component {
       })
       .then((result) => {
         toast.success("Successful registration!");
-        console.log(result);
+        setTimeout(() => {
+          this.navTo("/form");
+        }, 4000);
         this.resetData();
       })
       .catch((error) => {
