@@ -6,3 +6,5 @@ This is project contains the following things:
 2. Frontend made with ReactJs
 
 This is a simple form - based data flow web app.
+
+Please create a data.js file in the frontend folder with firebase configurations.
