@@ -60,9 +60,9 @@ class home extends React.Component {
           <br />
           <br />
           Click on the Register button to register for the programme or login if
-          already registered. Limited vacancies only!
+          already registered.
           <br />
-          Watch out for the deadline: <u>08/10/2023</u>.
+          Watch out for the deadline: <u>08/10/2023</u>. Limited vacancies only!
         </h3>
         <div id="buttonBar">
           <Button
@@ -74,7 +74,7 @@ class home extends React.Component {
               marginRight: "15px",
             }}
             onClick={() => {
-              toast.info("Going to register...");
+              toast.info("Going to register");
               setTimeout(() => this.navTo("/register"), 4000);
             }}
           >
@@ -87,7 +87,7 @@ class home extends React.Component {
               marginTop: "1vh",
             }}
             onClick={() => {
-              toast.info("Going to login...");
+              toast.info("Going to login");
               setTimeout(() => this.navTo("/login"), 4000);
             }}
           >

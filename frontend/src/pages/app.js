@@ -25,6 +25,9 @@ class app extends React.Component {
           newestOnTop={false}
           theme="dark"
         />
+        <div id="profileData">
+          <h1>Profile</h1>
+        </div>
       </div>
     );
   }

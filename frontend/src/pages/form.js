@@ -40,12 +40,20 @@ class form extends React.Component {
           theme="dark"
         />
         <div id="profile">
-            <p>Profile</p>
+          <p>Profile</p>
         </div>
         <div id="inputForm">
           <h3>Form</h3>
           <div id="inputs"></div>
         </div>
+        <Button
+          style={{
+            position: "absolute",
+          }}
+          onClick={() => this.navTo("/")}
+        >
+          Return to home page!
+        </Button>
       </div>
     );
   }
