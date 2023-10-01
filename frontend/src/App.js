@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
 
+import home from "./pages/home";
 import login from "./pages/login";
 import register from "./pages/register";
 import form from "./pages/form";
+import app from "./pages/app";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,9 +19,11 @@ export default class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={login}></Route>
+          <Route exact path="/" component={home}></Route>
+          <Route path="/login" component={login}></Route>
           <Route path="/register" component={register}></Route>
           <Route path="/form" component={form}></Route>
+          <Route path="/app" component={app}></Route>
         </Switch>
       </Router>
     );

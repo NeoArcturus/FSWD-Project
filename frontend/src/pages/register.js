@@ -32,6 +32,10 @@ class register extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    toast.info("Please register with your details");
+  };
+
   navTo = (path) => {
     this.props.history.push(path);
   };
@@ -220,7 +224,7 @@ class register extends React.Component {
                 borderColor: "transparent",
                 color: "white",
               }}
-              onClick={() => this.navTo("/")}
+              onClick={() => this.navTo("/login")}
             >
               Login
             </Button>

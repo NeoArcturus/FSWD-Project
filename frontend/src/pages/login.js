@@ -30,6 +30,16 @@ class login extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    if (
+      !localStorage.getItem("loginData") === null ||
+      !localStorage.getItem("loginData") === undefined
+    ) {
+      toast.success("Logging in...");
+      setTimeout(() => this.navTo("/form"), 4000);
+    } else toast.info("Please login!");
+  };
+
   navTo = (path) => {
     this.props.history.push(path);
   };
@@ -38,13 +48,14 @@ class login extends React.Component {
     console.log(rst);
     axios
       .post("http://localhost:8080/api/auth/authController/login", {
-        id: this.state.email,
+        email: this.state.email,
         password: this.state.password,
       })
       .then((result) => {
         toast.success("Successful login!");
         setTimeout(() => {
           this.navTo("/form");
+          localStorage.setItem("loginData", JSON.stringify(rst.user));
         }, 4000);
       })
       .catch((error) => {
@@ -61,6 +72,7 @@ class login extends React.Component {
         toast.success("Successful sign in!");
         setTimeout(() => {
           this.navTo("/form");
+          localStorage.setItem("loginData", JSON.stringify(rst.user));
         }, 4000);
       })
       .catch((error) => {

@@ -1,0 +1,31 @@
+#buttonBar Button {
+    background-color: transparent;
+    color: black;
+    border-color: transparent;
+    transition: 0.4s ease-in-out;
+    height: 40px;
+}
+
+#buttonBar Button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    color: white;
+    border-radius: 20px;
+    border-color: white;
+}
+
+#buttonBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#body {
+    display: flex;
+    justify-content: space-between;
+}
+
+#body h1 {
+    font-size: 50px;
+    margin-left: 25vw;
+    color: black;
+}
