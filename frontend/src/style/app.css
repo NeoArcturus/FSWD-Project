@@ -1,0 +1,19 @@
+#profileData {
+    background-color: rgb(0, 0, 0, 0.3);
+    color: aqua;
+    height: 400px;
+    width: 600px;
+    margin-top: 10vh;
+    margin-left: 35vw;
+    border-radius: 20px;
+    border-color: transparent;
+    border-style: solid;
+}
+
+#profileData Button {
+    background-color: rgb(0, 0, 0, 0.3);
+    color: aqua;
+    border-radius: 10px;
+    border-color: transparent;
+    transition: 0.4s ease-in-out;
+}

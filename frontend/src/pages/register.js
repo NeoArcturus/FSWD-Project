@@ -84,7 +84,7 @@ class register extends React.Component {
       .then((result) => {
         toast.success("Successful sign up!");
         setTimeout(() => {
-          this.navTo("/form");
+          this.navTo("/login");
         }, 4000);
         this.resetData();
       })
@@ -106,7 +106,7 @@ class register extends React.Component {
       .then((result) => {
         toast.success("Successful registration!");
         setTimeout(() => {
-          this.navTo("/form");
+          this.navTo("/login");
         }, 4000);
         this.resetData();
       })

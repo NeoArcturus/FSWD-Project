@@ -63,7 +63,11 @@ const login = (data, res) => {
             const token = jwt.generateToken(result[0]);
             if (rst === true) {
               res.status(200);
-              res.send({ message: "User Authenticated", token: token });
+              res.send({
+                message: "User Authenticated",
+                token: token,
+                profile: result[0],
+              });
             } else {
               res.status(401);
               res.send({ message: "Invalid password!" });
@@ -81,8 +85,16 @@ const googleLogin = (username, res) => {
     (error, result) => {
       if (error)
         res.status(500).send({ message: "Something went wrong", error: error });
-      else
-        res.status(200).send({ message: "User authenticated", result: result });
+      else {
+        const token = jwt.generateToken(result[0]);
+        res
+          .status(200)
+          .send({
+            message: "User authenticated",
+            token: token,
+            profile: result[0],
+          });
+      }
     }
   );
 };

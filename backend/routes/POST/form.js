@@ -5,8 +5,9 @@ const formControl = require("../../middleware/form");
 const router = express.Router();
 
 router.post("/formController", async (req, res) => {
-  const token = req.header(process.env.TOKEN_HEADER_KEY);
-  if (!token) res.status(401).send({ message: "Invalid Token" });
+  const token = req.header(process.env.SECRET_TOKEN_HEADER);
+  if (!token || !jwt.validateToken(token))
+    res.status(401).send({ message: "Invalid Token" });
   else {
     jwt.validateToken(token);
     formControl.putFormData(req.body, res);
@@ -14,9 +15,10 @@ router.post("/formController", async (req, res) => {
 });
 
 router.post("/formData", async (req, res) => {
-  const token = req.header(process.env.TOKEN_HEADER_KEY);
-  if (!token) res.status(401).send({ message: "Invalid Token" });
-  else formControl.retrieveFormData(req.body.id, res);
+  const token = req.header(process.env.SECRET_TOKEN_HEADER);
+  if (!token || !jwt.validateToken(token))
+    res.status(401).send({ message: "Invalid Token" });
+  else formControl.retrieveFormData(req.body.email, res);
 });
 
 module.exports = router;

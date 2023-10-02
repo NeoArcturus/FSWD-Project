@@ -31,13 +31,7 @@ class login extends React.Component {
   }
 
   componentDidMount = () => {
-    if (
-      !localStorage.getItem("loginData") === null ||
-      !localStorage.getItem("loginData") === undefined
-    ) {
-      toast.success("Logging in...");
-      setTimeout(() => this.navTo("/form"), 4000);
-    } else toast.info("Please login!");
+    toast.info("Please login!");
   };
 
   navTo = (path) => {
@@ -53,9 +47,9 @@ class login extends React.Component {
       })
       .then((result) => {
         toast.success("Successful login!");
+        localStorage.setItem("loginData", JSON.stringify(result.data));
         setTimeout(() => {
-          this.navTo("/form");
-          localStorage.setItem("loginData", JSON.stringify(rst.user));
+          this.navTo("/app");
         }, 4000);
       })
       .catch((error) => {
@@ -70,9 +64,9 @@ class login extends React.Component {
       })
       .then((result) => {
         toast.success("Successful sign in!");
+        localStorage.setItem("loginData", JSON.stringify(result.data));
         setTimeout(() => {
-          this.navTo("/form");
-          localStorage.setItem("loginData", JSON.stringify(rst.user));
+          this.navTo("/app");
         }, 4000);
       })
       .catch((error) => {

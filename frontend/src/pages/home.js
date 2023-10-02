@@ -14,8 +14,8 @@ class home extends React.Component {
 
   componentDidMount = () => {
     if (
-      !localStorage.getItem("loginData") === null ||
-      !localStorage.getItem("loginData") === undefined
+      localStorage.getItem("loginData") != null ||
+      localStorage.getItem("loginData") != undefined
     )
       this.navTo("/app");
   };
