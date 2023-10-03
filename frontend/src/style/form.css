@@ -24,26 +24,10 @@ Button:hover {
     font-size: 35px;
 }
 
-#inputForm Input {
-    font-size: 20px;
-    transition: 0.4s ease-in-out;
-}
-
-#inputForm Input:hover {
+Button {
+    background-color: rgb(0, 0, 0, 0.5);
     color: aqua;
-}
-
-#profile {
-    color: aqua;
-    height: 50px;
-    width: 50px;
-    border-color: transparent;
-    border-style: solid;
     border-radius: 10px;
-    margin-left: 95vw;
+    border-color: transparent;
     transition: 0.4s ease-in-out;
-}
-
-#profile:hover {
-    border-color: aqua;
 }

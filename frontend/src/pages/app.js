@@ -31,7 +31,6 @@ class app extends React.Component {
       )
       .then((result) => {
         console.log(result);
-
       })
       .catch((error) => {
         console.log(error);
@@ -41,6 +40,16 @@ class app extends React.Component {
 
   navTo = (path) => {
     this.props.history.push(path);
+  };
+
+  formPageControl = () => {
+    if (
+      localStorage.getItem("formData") === undefined ||
+      localStorage.getItem("formData") === null
+    ) {
+      toast.info("Going to the registration form");
+      setTimeout(() => this.navTo("/form"), 4000);
+    } else toast.info("You have already completed this step!");
   };
 
   logout = () => {
@@ -73,7 +82,6 @@ class app extends React.Component {
           >
             <h3>Name: {this.state.data.name}</h3>
             <h3>Email: {this.state.data.email}</h3>
-            <h3>Phone: {this.state.data.phone}</h3>
             <h3>Application Status: {this.state.status}</h3>
           </div>
           <br />
@@ -83,6 +91,7 @@ class app extends React.Component {
               borderStyle: "solid",
               marginRight: "15px",
             }}
+            onClick={() => this.formPageControl()}
           >
             Fill form
           </Button>
