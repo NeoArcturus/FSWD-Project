@@ -78,7 +78,7 @@ class home extends React.Component {
               setTimeout(() => this.navTo("/register"), 4000);
             }}
           >
-            Register
+            Sign Up
           </Button>
           <Button
             style={{
@@ -91,7 +91,7 @@ class home extends React.Component {
               setTimeout(() => this.navTo("/login"), 4000);
             }}
           >
-            Login
+            Sign In
           </Button>
         </div>
       </div>
