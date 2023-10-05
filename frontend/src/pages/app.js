@@ -82,6 +82,7 @@ class app extends React.Component {
           >
             <h3>Name: {this.state.data.name}</h3>
             <h3>Email: {this.state.data.email}</h3>
+            <h3>Registration ID: {this.state.data.regId}</h3>
             <h3>Application Status: {this.state.status}</h3>
           </div>
           <br />

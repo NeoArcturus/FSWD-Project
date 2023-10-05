@@ -1,9 +1,10 @@
 const sql = require("../database");
 const bcrypt = require("bcrypt");
 const jwt = require("./jwtToken");
+const crypto = require("crypto");
 
 const register = (data, res) => {
-  console.log(data);
+  const id = crypto.randomUUID();
   bcrypt.genSalt(10, (error, salt) => {
     if (!error)
       bcrypt.hash(data.password, salt, (err, hash) => {
@@ -12,13 +13,13 @@ const register = (data, res) => {
             "INSERT INTO users VALUES('" +
               data.name +
               "', '" +
-              data.email +
-              "', '" +
               hash +
               "', '" +
-              data.profile +
-              "', '" +
               data.phone +
+              "', '" +
+              id +
+              "', '" +
+              data.email +
               "')",
             (error, result) => {
               if (error) {
@@ -87,24 +88,25 @@ const googleLogin = (username, res) => {
         res.status(500).send({ message: "Something went wrong", error: error });
       else {
         const token = jwt.generateToken(result[0]);
-        res
-          .status(200)
-          .send({
-            message: "User authenticated",
-            token: token,
-            profile: result[0],
-          });
+        res.status(200).send({
+          message: "User authenticated",
+          token: token,
+          profile: result[0],
+        });
       }
     }
   );
 };
 
 const googleSignUp = (data, res) => {
+  const id = crypto.randomUUID();
   sql.query(
-    "INSERT INTO users (name, email) VALUES ('" +
+    "INSERT INTO users (name, email, regId) VALUES ('" +
       data.displayName +
       "', '" +
       data.email +
+      "', '" +
+      id +
       "')",
     (error, result) => {
       if (error)

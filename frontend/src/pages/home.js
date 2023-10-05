@@ -16,8 +16,11 @@ class home extends React.Component {
     if (
       localStorage.getItem("loginData") != null ||
       localStorage.getItem("loginData") != undefined
-    )
-      this.navTo("/app");
+    ) {
+      const data = JSON.parse(localStorage.getItem("loginData"));
+      const id = data.profile.regId;
+      this.navTo("/app/" + id);
+    }
   };
 
   navTo = (path) => {
@@ -40,8 +43,8 @@ class home extends React.Component {
             marginTop: "35vh",
             position: "absolute",
             color: "black",
-            marginLeft: "10vw",
-            fontSize: "25px",
+            marginLeft: "1vw",
+            fontSize: "30px",
           }}
         >
           This is an open challenge programme for budding start - ups. <br />
@@ -54,7 +57,9 @@ class home extends React.Component {
           given guidance on start - up boost by Industry - based experts.
           <br />
           <b>
-            <u>The project must be related to technology.</u>
+            <u style={{ color: "white" }}>
+              The project must be related to technology.
+            </u>
           </b>
           <br />
           <br />
@@ -62,14 +67,15 @@ class home extends React.Component {
           Click on the Register button to register for the programme or login if
           already registered.
           <br />
-          Watch out for the deadline: <u>08/10/2023</u>. Limited vacancies only!
+          Watch out for the deadline:{" "}
+          <u style={{ color: "white" }}>08/10/2023</u>. Limited vacancies only!
         </h3>
         <div id="buttonBar">
           <Button
             style={{
               borderStyle: "solid",
               fontSize: "30px",
-              marginLeft: "12vw",
+              marginLeft: "85vw",
               marginTop: "1vh",
               marginRight: "15px",
             }}

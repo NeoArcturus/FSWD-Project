@@ -12,6 +12,7 @@ class form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       email: "",
       projectDesc: "",
       projectName: "",
@@ -21,6 +22,9 @@ class form extends React.Component {
   }
 
   componentDidMount = () => {
+    const data = JSON.parse(localStorage.getItem("loginData"));
+    console.log(data);
+    this.setState({ id: data.profile.regId });
     if (localStorage.getItem("formData"))
       this.setState({ formData: JSON.parse(localStorage.getItem("formData")) });
     else
@@ -77,6 +81,7 @@ class form extends React.Component {
         />
         <div id="inputForm" style={{ textAlign: "center " }}>
           <h3>Form</h3>
+          <h3 style={{ fontSize: "20px" }}>Registration ID: {this.state.id}</h3>
           <h3
             style={{
               position: "absolute",
@@ -224,9 +229,18 @@ class form extends React.Component {
             style={{
               fontSize: "30px",
               marginTop: "700px",
+              marginRight: "20px",
             }}
           >
             Save and submit
+          </Button>
+          <Button
+            style={{
+              fontSize: "30px",
+              marginTop: "700px",
+            }}
+          >
+            Clear form
           </Button>
         </div>
       </div>

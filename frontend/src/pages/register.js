@@ -147,6 +147,15 @@ class register extends React.Component {
           newestOnTop={false}
           theme="dark"
         />
+        <h1
+          style={{
+            color: "black",
+            fontSize: "50px",
+            marginLeft: "27vw",
+          }}
+        >
+          OPEN CHALLENGE PROGRAMME
+        </h1>
         <div id="loginForm">
           <h3>Sign Up</h3>
           <Input

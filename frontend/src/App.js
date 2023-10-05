@@ -23,7 +23,7 @@ export default class App extends React.Component {
           <Route path="/login" component={login}></Route>
           <Route path="/register" component={register}></Route>
           <Route path="/form" component={form}></Route>
-          <Route path="/app" component={app}></Route>
+          <Route path="/app/:id" component={app}></Route>
         </Switch>
       </Router>
     );

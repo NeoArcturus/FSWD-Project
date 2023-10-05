@@ -49,7 +49,7 @@ class login extends React.Component {
         toast.success("Successful login!");
         localStorage.setItem("loginData", JSON.stringify(result.data));
         setTimeout(() => {
-          this.navTo("/app");
+          this.navTo("/app/" + result.data.profile.regId);
         }, 4000);
       })
       .catch((error) => {
@@ -66,7 +66,7 @@ class login extends React.Component {
         toast.success("Successful sign in!");
         localStorage.setItem("loginData", JSON.stringify(result.data));
         setTimeout(() => {
-          this.navTo("/app");
+          this.navTo("/app/" + result.data.profile.regId);
         }, 4000);
       })
       .catch((error) => {
@@ -131,6 +131,15 @@ class login extends React.Component {
           newestOnTop={false}
           theme="dark"
         />
+        <h1
+          style={{
+            color: "black",
+            fontSize: "50px",
+            marginLeft: "27vw",
+          }}
+        >
+          OPEN CHALLENGE PROGRAMME
+        </h1>
         <div id="loginForm">
           <h3>Sign In</h3>
           <br />
