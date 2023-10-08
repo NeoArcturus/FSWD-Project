@@ -37,7 +37,7 @@ class home extends React.Component {
           newestOnTop={false}
           theme="dark"
         />
-        <h1>OPEN CHALLENGE PROGRAMME</h1>
+        <h1>STARTUP CHALLENGE PROGRAMME</h1>
         <h3
           style={{
             marginTop: "35vh",

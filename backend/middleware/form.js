@@ -6,12 +6,12 @@ const putFormData = (data, res) => {
     res.status(401);
     res.send({ message: "Invalid form data!" });
   } else {
-    const encryptedData = jwt.generateToken(data);
+    const encryptedData = jwt.generateToken(data.body);
     sql.query(
       "INSERT INTO application VALUES ('" +
-        data.email +
-        "', '" +
         encryptedData +
+        "', '" +
+        data.email +
         "', 'Reviewing')",
       (error, result) => {
         if (error) {
@@ -35,9 +35,9 @@ const retrieveFormData = (email, res) => {
         if (error) {
           res.status(500);
           res.send({ error: error });
-        } else if (result.length === 0)
+        } else if (result.length === 0) {
           res.status(404).send({ message: "Data not found!" });
-        else {
+        } else {
           res.status(200);
           res.send({ data: result[0] });
         }
@@ -46,4 +46,22 @@ const retrieveFormData = (email, res) => {
   }
 };
 
-module.exports = { putFormData, retrieveFormData };
+const withDraw = (email, res) => {
+  if (email === null || email === undefined || email === "") res.send(404);
+  else {
+    sql.query(
+      "DELETE FROM application WHERE email='" + email + "'",
+      (error, result) => {
+        if (error) {
+          res.status(500);
+          res.send({ error: error });
+        } else {
+          res.status(200);
+          res.send({ data: result });
+        }
+      }
+    );
+  }
+};
+
+module.exports = { putFormData, retrieveFormData, withDraw };

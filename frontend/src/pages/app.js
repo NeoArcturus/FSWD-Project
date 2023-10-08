@@ -30,10 +30,9 @@ class app extends React.Component {
         { headers: { Authorization: profile.token } }
       )
       .then((result) => {
-        console.log(result);
+        this.setState({ status: result.data.data.status });
       })
       .catch((error) => {
-        console.log(error);
         this.setState({ status: error.response.data.message });
       });
   };
@@ -43,18 +42,49 @@ class app extends React.Component {
   };
 
   formPageControl = () => {
-    if (
-      localStorage.getItem("formData") === undefined ||
-      localStorage.getItem("formData") === null
-    ) {
-      toast.info("Going to the registration form");
-      setTimeout(() => this.navTo("/form"), 4000);
-    } else toast.info("You have already completed this step!");
+    axios
+      .post(
+        "http://localhost:8080/api/form/formData",
+        { email: this.state.data.email },
+        { headers: { Authorization: this.state.token } }
+      )
+      .then((result) => toast.warning("You have already completed this step!"))
+      .catch((error) => {
+        toast.info("Getting you to the form page");
+        setTimeout(() => this.navTo("/form/" + this.state.data.regId), 4000);
+      });
+  };
+
+  withDraw = () => {
+    axios
+      .post(
+        "http://localhost:8080/api/form/withDraw",
+        { email: this.state.data.email },
+        { headers: { Authorization: this.state.token } }
+      )
+      .then((result) => {
+        toast.success("Your application has been withdrawn! Loggin out");
+        localStorage.removeItem("loginData");
+        localStorage.removeItem("formData");
+        setTimeout(() => {
+          this.navTo("/");
+          this.setState({
+            data: {},
+            token: "",
+            status: "",
+          });
+        }, 4000);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        console.log(error);
+      });
   };
 
   logout = () => {
     toast.info("Logging out!");
     localStorage.removeItem("loginData");
+    localStorage.removeItem("formData");
     setTimeout(() => {
       this.navTo("/");
       this.setState({
@@ -75,15 +105,28 @@ class app extends React.Component {
           newestOnTop={false}
           theme="dark"
         />
+        <h1
+          style={{
+            color: "black",
+            fontSize: "50px",
+            marginLeft: "25vw",
+          }}
+        >
+          STARTUP CHALLENGE PROGRAMME
+        </h1>
         <div id="profileData">
           <h1 style={{ fontSize: "50px" }}>Profile</h1>
           <div
             style={{ textAlign: "left", marginLeft: "25px", fontSize: "20px" }}
           >
-            <h3>Name: {this.state.data.name}</h3>
-            <h3>Email: {this.state.data.email}</h3>
-            <h3>Registration ID: {this.state.data.regId}</h3>
-            <h3>Application Status: {this.state.status}</h3>
+            <h3 style={{ color: "white" }}>Name: {this.state.data.name}</h3>
+            <h3 style={{ color: "white" }}>Email: {this.state.data.email}</h3>
+            <h3 style={{ color: "white" }}>
+              Registration ID: {this.state.data.regId}
+            </h3>
+            <h3 style={{ color: "white" }}>
+              Application Status: {this.state.status}
+            </h3>
           </div>
           <br />
           <Button
@@ -95,6 +138,16 @@ class app extends React.Component {
             onClick={() => this.formPageControl()}
           >
             Fill form
+          </Button>
+          <Button
+            style={{
+              fontSize: "30px",
+              borderStyle: "solid",
+              marginRight: "15px",
+            }}
+            onClick={() => this.withDraw()}
+          >
+            Withdraw
           </Button>
           <Button
             style={{ fontSize: "30px", borderStyle: "solid" }}

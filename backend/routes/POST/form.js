@@ -21,4 +21,11 @@ router.post("/formData", async (req, res) => {
   else formControl.retrieveFormData(req.body.email, res);
 });
 
+router.post("/withDraw", async (req, res) => {
+  const token = req.header(process.env.SECRET_TOKEN_HEADER);
+  if (!token || !jwt.validateToken(token))
+    res.status(401).send({ message: "Invalid Token" });
+  else formControl.withDraw(req.body.email, res);
+});
+
 module.exports = router;

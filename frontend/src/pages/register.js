@@ -154,7 +154,7 @@ class register extends React.Component {
             marginLeft: "27vw",
           }}
         >
-          OPEN CHALLENGE PROGRAMME
+          STARTUP CHALLENGE PROGRAMME
         </h1>
         <div id="loginForm">
           <h3>Sign Up</h3>
