@@ -69,6 +69,21 @@ class home extends React.Component {
           <br />
           Watch out for the deadline:{" "}
           <u style={{ color: "white" }}>08/10/2023</u>. Limited vacancies only!
+          <br />
+          <br />
+          <br />
+          Click{" "}
+          <Button
+            style={{
+              backgroundColor: "transparent",
+              fontSize: "30px",
+              color: "white",
+            }}
+            onClick={() => this.navTo("/adminAuth")}
+          >
+            here
+          </Button>{" "}
+          to sign in as admins.
         </h3>
         <div id="buttonBar">
           <Button

@@ -8,6 +8,7 @@ import login from "./pages/login";
 import register from "./pages/register";
 import form from "./pages/form";
 import app from "./pages/app";
+import adminAuth from "./pages/adminAuth";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ export default class App extends React.Component {
           <Route exact path="/" component={home}></Route>
           <Route path="/login" component={login}></Route>
           <Route path="/register" component={register}></Route>
+          <Route path="/adminAuth" component={adminAuth}></Route>
           <Route path="/form/:id" component={form}></Route>
           <Route path="/app/:id" component={app}></Route>
         </Switch>

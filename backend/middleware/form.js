@@ -1,5 +1,6 @@
 const sql = require("../database");
 const jwt = require("./jwtToken");
+const crypto = require("crypto");
 
 const putFormData = (data, res) => {
   if (data === undefined || data === null || data === "") {
@@ -7,12 +8,15 @@ const putFormData = (data, res) => {
     res.send({ message: "Invalid form data!" });
   } else {
     const encryptedData = jwt.generateToken(data.body);
+    const id = crypto.randomUUID();
     sql.query(
       "INSERT INTO application VALUES ('" +
         encryptedData +
+        "', 'Reviewing', '" +
+        id +
         "', '" +
         data.email +
-        "', 'Reviewing')",
+        "')",
       (error, result) => {
         if (error) {
           res.status(500);
@@ -50,7 +54,7 @@ const withDraw = (email, res) => {
   if (email === null || email === undefined || email === "") res.send(404);
   else {
     sql.query(
-      "DELETE FROM application WHERE email='" + email + "'",
+      "UPDATE application SET status='Withdrawn' WHERE email='" + email + "'",
       (error, result) => {
         if (error) {
           res.status(500);

@@ -7,7 +7,7 @@ const db = require("./database");
 const GET = require("./routes/GET/index.js");
 const POST = require("./routes/POST/index.js");
 
-const admin = require("./adminRoute/POST/auth");
+const admin = require("./adminRoute/auth");
 
 const app = express();
 const PORT = 8080;

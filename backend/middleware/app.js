@@ -15,4 +15,14 @@ const getData = (email, res) => {
   );
 };
 
-module.exports = { getData };
+const dataForAdmin = (res) => {
+  sql.query("SELECT * FROM users", (error, result) => {
+    if (error)
+      res.status(500).send({ message: "Something went wrong!", error: error });
+    else if (result.length === 0)
+      res.status(404).send({ message: "Data does not exist!" });
+    else res.status(200).send({ data: result });
+  });
+};
+
+module.exports = { getData, dataForAdmin };
