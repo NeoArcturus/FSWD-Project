@@ -12,7 +12,7 @@ class adminLogin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      username: "",
       password: "",
       toggleType: "password",
     };
@@ -34,16 +34,32 @@ class adminLogin extends React.Component {
   };
 
   onChangeUser = (event) => {
-    this.setState({ email: event.target.value });
+    this.setState({ username: event.target.value });
   };
 
   onChangePassword = (event) => {
     this.setState({ password: event.target.value });
   };
 
+  loginClick = () => {
+    axios
+      .post("http://localhost:8080/admin/control/login", {
+        username: this.state.username,
+        password: this.state.password,
+      })
+      .then((result) => {
+        toast.success("Login successful!");
+        // setTimeout(() => this.navTo("/admin/app"), 4000);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        console.log(error);
+      });
+  };
+
   resetData = () => {
     this.setState({
-      email: "",
+      username: "",
       password: "",
     });
   };
@@ -79,7 +95,7 @@ class adminLogin extends React.Component {
           <Input
             placeholder="Admin Username"
             type="email"
-            value={this.state.email}
+            value={this.state.username}
             onChange={(event) => this.onChangeUser(event)}
             style={{
               color: "white",
