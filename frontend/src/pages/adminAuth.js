@@ -49,7 +49,8 @@ class adminLogin extends React.Component {
       })
       .then((result) => {
         toast.success("Login successful!");
-        // setTimeout(() => this.navTo("/admin/app"), 4000);
+        localStorage.setItem("adminToken", JSON.stringify(result.data.token));
+        setTimeout(() => this.navTo("/admin/app"), 4000);
       })
       .catch((error) => {
         toast.error(error.response.data.message);

@@ -9,6 +9,7 @@ import register from "./pages/register";
 import form from "./pages/form";
 import app from "./pages/app";
 import adminAuth from "./pages/adminAuth";
+import adminApp from "./pages/adminApp";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class App extends React.Component {
           <Route path="/login" component={login}></Route>
           <Route path="/register" component={register}></Route>
           <Route path="/adminAuth" component={adminAuth}></Route>
+          <Route path="/admin/app" component={adminApp}></Route>
           <Route path="/form/:id" component={form}></Route>
           <Route path="/app/:id" component={app}></Route>
         </Switch>

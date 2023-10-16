@@ -7,7 +7,7 @@ const db = require("./database");
 const GET = require("./routes/GET/index.js");
 const POST = require("./routes/POST/index.js");
 
-const admin = require("./adminRoute/auth");
+const admin = require("./adminRoute");
 
 const app = express();
 const PORT = 8080;
@@ -22,7 +22,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use("/api", POST);
-app.use("/", GET);
+app.use("/get", GET);
 app.use("/admin", admin);
 
 app.listen(PORT, (error) => {
