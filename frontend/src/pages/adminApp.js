@@ -62,45 +62,80 @@ class app extends React.Component {
     }, 4000);
   };
 
-  selectApplicant = (id, email) => {
-    console.log(id);
-    axios
-      .post(
-        "http://localhost:8080/admin/applications/applicant/" +
-          id +
-          "/selectApplicant",
-        { id: id, email: email },
-        { headers: { Authorization: this.state.token } }
-      )
-      .then((result) => {
-        toast.info("Applicant selected!");
-        console.log(result);
-        this.componentDidMount();
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        console.log(error);
-      });
+  selectApplicant = (id, email, status) => {
+    if (status === "Selected" || status === "Rejected")
+      toast.warn("Action already done!");
+    else if (status === "Withdrawn")
+      toast.info("Application has been withdrawn by the applicant");
+    else {
+      axios
+        .post(
+          "http://localhost:8080/admin/applications/applicant/" +
+            id +
+            "/selectApplicant",
+          { id: id, email: email },
+          { headers: { Authorization: this.state.token } }
+        )
+        .then((result) => {
+          toast.info("Applicant selected!");
+          console.log(result);
+          this.componentDidMount();
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          console.log(error);
+        });
+    }
   };
 
-  rejectApplicant = (id, email) => {
-    axios
-      .post(
-        "http://localhost:8080/admin/applications/applicant/" +
-          id +
-          "/rejectApplicant",
-        { id: id, email: email },
-        { headers: { Authorization: this.state.token } }
-      )
-      .then((result) => {
-        toast.info("Applicant rejected!");
-        console.log(result);
-        this.componentDidMount();
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        console.log(error);
-      });
+  rejectApplicant = (id, email, status) => {
+    if (status === "Selected" || status === "Rejected")
+      toast.warn("Action already done!");
+    else if (status === "Withdrawn")
+      toast.info("Application has been withdrawn by the applicant");
+    else {
+      axios
+        .post(
+          "http://localhost:8080/admin/applications/applicant/" +
+            id +
+            "/rejectApplicant",
+          { id: id, email: email },
+          { headers: { Authorization: this.state.token } }
+        )
+        .then((result) => {
+          toast.info("Applicant rejected!");
+          console.log(result);
+          this.componentDidMount();
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          console.log(error);
+        });
+    }
+  };
+
+  removeApplication = (id, status) => {
+    if (status === "Rejected" || status === "Withdrawn") {
+      axios
+        .post(
+          "http://localhost:8080/admin/applications/applicant/" +
+            id +
+            "/deleteApplication",
+          { id: id },
+          { headers: { Authorization: this.state.token } }
+        )
+        .then((result) => {
+          toast.info("Application deleted!");
+          console.log(result);
+          this.componentDidMount();
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          console.log(error);
+        });
+    } else if (status === "Reviewing")
+      toast.warn("Application is in review stage!");
+    else toast.info("Application has been selected!");
   };
 
   render() {
@@ -133,12 +168,13 @@ class app extends React.Component {
         </h2>
         <div id="applicantTable">
           <TableContainer>
-            <Table sx={{ minWidth: 650 }}>
+            <Table sx={{ minWidth: 800 }}>
               <TableHead>
                 <TableRow>
                   <TableCell
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Form ID
@@ -147,6 +183,7 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Email
@@ -155,6 +192,7 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Answer 1
@@ -163,6 +201,7 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Answer 2
@@ -171,6 +210,7 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Answer 3
@@ -179,6 +219,7 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Answer 4
@@ -187,6 +228,7 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Answer 5
@@ -195,6 +237,7 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Answer 6
@@ -203,14 +246,16 @@ class app extends React.Component {
                     align="left"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Status
                   </TableCell>
                   <TableCell
-                    align="left"
+                    align="center"
                     style={{
                       color: "aqua",
+                      fontSize: "12px",
                     }}
                   >
                     Choose Action
@@ -223,6 +268,7 @@ class app extends React.Component {
                     <TableCell
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.ID}
@@ -231,6 +277,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Email}
@@ -239,6 +286,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Answers.a1}
@@ -247,6 +295,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Answers.a2}
@@ -255,6 +304,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Answers.a3}
@@ -263,6 +313,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Answers.a4}
@@ -271,6 +322,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Answers.a5}
@@ -279,6 +331,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Answers.a6}
@@ -287,6 +340,7 @@ class app extends React.Component {
                       align="left"
                       style={{
                         color: "white",
+                        fontSize: "12px",
                       }}
                     >
                       {applicant.Status}
@@ -295,20 +349,36 @@ class app extends React.Component {
                       <Button
                         style={{ marginRight: "5px", color: "greenyellow" }}
                         onClick={() =>
-                          this.selectApplicant(applicant.ID, applicant.Email)
+                          this.selectApplicant(
+                            applicant.ID,
+                            applicant.Email,
+                            applicant.Status
+                          )
                         }
                       >
                         Accept
+                      </Button>
+                      <Button
+                        style={{ marginRight: "5px", color: "red" }}
+                        onClick={() =>
+                          this.rejectApplicant(
+                            applicant.ID,
+                            applicant.Email,
+                            applicant.Status
+                          )
+                        }
+                      >
+                        Reject
                       </Button>
                       <Button
                         style={{
                           color: "red",
                         }}
                         onClick={() =>
-                          this.rejectApplicant(applicant.ID, applicant.Email)
+                          this.removeApplication(applicant.ID, applicant.Status)
                         }
                       >
-                        Reject
+                        Delete application
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -84,4 +84,21 @@ const rejectTeam = (id, email, res) => {
   }
 };
 
-module.exports = { selectTeam, rejectTeam };
+const deleteApplication = (id, res) => {
+  if (id === "" || id === null || id === undefined)
+    res.status(401).send({ message: "Invalid id" });
+  else {
+    sql.query(
+      "DELETE FROM application WHERE id='" + id + "'",
+      (error, result) => {
+        if (error)
+          res
+            .status(500)
+            .send({ message: "Something went wrong", error: error });
+        else res.status(200).send({ result: result });
+      }
+    );
+  }
+};
+
+module.exports = { selectTeam, rejectTeam, deleteApplication };
